@@ -1,0 +1,51 @@
+doctype html
+html(lang='en')
+  head
+    meta(charset='utf-8')
+    meta(http-equiv='X-UA-Compatible', content='IE=edge')
+    meta(name='viewport', content='width=device-width, initial-scale=1, shrink-to-fit=no')
+    meta(name='description', content='')
+    meta(name='author', content='')
+    link(href='img/logo/logo.png', rel='icon')
+    title User Verification | Verfication
+    link(href='vendor/fontawesome-free/css/all.min.css', rel='stylesheet', type='text/css')
+    link(href='vendor/bootstrap/css/bootstrap.min.css', rel='stylesheet', type='text/css')
+    link(href='css/ruang-admin.min.css', rel='stylesheet')
+  body.bg-gradient-login
+    // Login Content
+    .container-login
+      .row.justify-content-center
+        .col-xl-10.col-lg-12.col-md-9
+          .card.shadow-sm.my-5
+            .card-body.p-0
+              .row
+                
+                .col-lg-12
+                  .login-form
+                    .text-center
+                      img(src='img/logo/logo.png',width='50px')
+                      br
+                      br
+                      
+                      h1.h4.text-gray-900.mb-4 User Verification
+                    != messages('message', locals)
+                    form.user(action='/user_verification_post',method='POST')
+                      .text-center
+                        p Your verification code has been sent to: 
+                         span(style='font-weight:bold') #{user.username}
+                      .form-group
+                        input#exampleInputEmail.form-control(type='number',name='verification_code', placeholder='Enter Verification Code',required)
+                      
+                      .form-group
+                        button.btn.btn-primary.btn-block Verify
+                    
+                    hr
+                    .text-center
+                      a.font-weight-bold.small(href='/log_out') Go back
+                    .text-center
+                
+    // Login Content
+    script(src='vendor/jquery/jquery.min.js')
+    script(src='vendor/bootstrap/js/bootstrap.bundle.min.js')
+    script(src='vendor/jquery-easing/jquery.easing.min.js')
+    script(src='js/ruang-admin.min.js')

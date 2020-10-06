@@ -1,0 +1,279 @@
+doctype html
+html(lang='en')
+  head
+    meta(charset='utf-8')
+    meta(http-equiv='X-UA-Compatible', content='IE=edge')
+    meta(name='viewport', content='width=device-width, initial-scale=1, shrink-to-fit=no')
+    meta(name='description', content='')
+    meta(name='author', content='')
+    link(href='img/logo/logo.png', rel='icon')
+    title Dashboard - User account
+    link(href='vendor/fontawesome-free/css/all.min.css', rel='stylesheet', type='text/css')
+    link(href='vendor/bootstrap/css/bootstrap.min.css', rel='stylesheet', type='text/css')
+    link(href='css/ruang-admin.min.css', rel='stylesheet')
+    link(href='vendor/datatables/dataTables.bootstrap4.min.css', rel='stylesheet')
+  body#page-top
+    #wrapper
+      // Sidebar
+      ul#accordionSidebar.navbar-nav.sidebar.sidebar-light.accordion
+        a.sidebar-brand.d-flex.align-items-center.justify-content-center(href='/dashboard')
+          .sidebar-brand-icon
+            img(src='img/logo/logo2.png')
+          .sidebar-brand-text.mx-3 TMS
+        hr.sidebar-divider.my-0
+        li.nav-item.active
+          a.nav-link(href='/dashboard')
+            i.fas.fa-fw.fa-tachometer-alt
+            span Dashboard
+        hr.sidebar-divider
+        .sidebar-heading
+          | Space
+        li.nav-item
+          a.nav-link.collapsed(href='#', data-toggle='collapse', data-target='#collapseBootstrap', aria-expanded='true', aria-controls='collapseBootstrap')
+            i.far.fa-fw.fa-window-maximize
+            span Tasks
+          #collapseBootstrap.collapse(aria-labelledby='headingBootstrap', data-parent='#accordionSidebar')
+            .bg-white.py-2.collapse-inner.rounded
+              h6.collapse-header Task Management
+              a.collapse-item(href='/action_items') Action Items
+              a.collapse-item(href='/ideas') Ideas
+              a.collapse-item(href='/backlog') Backlog
+        li.nav-item
+          a.nav-link.collapsed(href='/notifications')
+            i.fas.fa-bell.fa-fw
+            span Notifications
+            
+        
+       
+      #content-wrapper.d-flex.flex-column
+        #content
+          // TopBar
+          nav.navbar.navbar-expand.navbar-light.bg-navbar.topbar.mb-4.static-top
+            button#sidebarToggleTop.btn.btn-link.rounded-circle.mr-3
+              i.fa.fa-bars
+            ul.navbar-nav.ml-auto
+             
+              
+              
+              li.nav-item.dropdown.no-arrow
+                a#userDropdown.nav-link.dropdown-toggle(href='#', role='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
+                  img.img-profile.rounded-circle(src='img/boy.png', style='max-width: 60px')
+                  span.ml-2.d-none.d-lg-inline.text-white.small #{user.first_name} #{user.last_name}
+                .dropdown-menu.dropdown-menu-right.shadow.animated--grow-in(aria-labelledby='userDropdown')
+                 
+                  a.dropdown-item(href='javascript:void(0);', data-toggle='modal', data-target='#logoutModal')
+                    i.fas.fa-sign-out-alt.fa-sm.fa-fw.mr-2.text-gray-400
+                    |                   Logout
+          // Topbar
+          // Container Fluid
+          #container-wrapper.container-fluid(style='margin-bottom:200px')
+            .d-sm-flex.align-items-center.justify-content-between.mb-4
+              h1.h3.mb-0.text-gray-800 Dashboard
+              ol.breadcrumb
+                li.breadcrumb-item
+                  a(href='#') Home
+                li.breadcrumb-item.active(aria-current='page') Dashboard
+            .row.mb-3
+              // Earnings (Monthly) Card Example
+              .col-xl-4.col-md-6.mb-4
+               a(href="/action_items")
+                .card.h-100
+                  .card-body
+                    .row.align-items-center
+                      .col.mr-2
+                        .text-xs.font-weight-bold.text-uppercase.mb-1 Action Items
+                        .h5.mb-0.font-weight-bold.text-gray-800 #{action_items.length}
+                        .mt-2.mb-0.text-muted.text-xs
+                          
+                          span Assigned to you.
+                      .col-auto
+                        .mt-2.mb-0.text-muted.text-xs
+                          
+                          span TO DO: 
+                           &nbsp;
+                           span.badge(style='color:black;background-color:whitesmoke;font-size:1.1em') #{todo_1}
+                        .mt-2.mb-0.text-muted.text-xs
+                          
+                          span IN PROGRESS: 
+                           &nbsp;
+                           span.badge(style='color:black;background-color:whitesmoke;font-size:1.1em') #{inprogress_1}
+                        .mt-2.mb-0.text-muted.text-xs
+                          
+                          span REVIEW:
+                           &nbsp;
+                           span.badge(style='color:black;background-color:whitesmoke;font-size:1.1em') #{review_1}
+                        .mt-2.mb-0.text-muted.text-xs
+                          
+                          span REVISION: 
+                           &nbsp;
+                           span.badge(style='color:black;background-color:whitesmoke;font-size:1.1em') #{revision_1}
+                        .mt-2.mb-0.text-muted.text-xs
+                          
+                          span COMPLETE: 
+                           &nbsp;
+                           span.badge(style='color:black;background-color:whitesmoke;font-size:1.1em') #{complete_1}
+              // Earnings (Annual) Card Example
+              .col-xl-4.col-md-6.mb-4
+               a(href="/ideas")
+                .card.h-100
+                  .card-body
+                    .row.no-gutters.align-items-center
+                      .col.mr-2
+                        .text-xs.font-weight-bold.text-uppercase.mb-1 Ideas
+                        .h5.mb-0.font-weight-bold.text-gray-800 #{ideas.length}
+                        .mt-2.mb-0.text-muted.text-xs
+                          
+                          span Assigned to you.
+                      .col-auto
+                        .mt-2.mb-0.text-muted.text-xs
+                          
+                          span TO DO: 
+                           &nbsp;
+                           span.badge(style='color:black;background-color:whitesmoke;font-size:1.1em') #{todo_2}
+                        .mt-2.mb-0.text-muted.text-xs
+                          
+                          span IN PROGRESS: 
+                           &nbsp;
+                           span.badge(style='color:black;background-color:whitesmoke;font-size:1.1em') #{inprogress_2}
+                        .mt-2.mb-0.text-muted.text-xs
+                          
+                          span REVIEW: 
+                           &nbsp;
+                           span.badge(style='color:black;background-color:whitesmoke;font-size:1.1em') #{review_2}
+                        .mt-2.mb-0.text-muted.text-xs
+                          
+                          span REVISION: 
+                           &nbsp;
+                           span.badge(style='color:black;background-color:whitesmoke;font-size:1.1em') #{revision_2}
+                        .mt-2.mb-0.text-muted.text-xs
+                          
+                          span COMPLETE: 
+                           &nbsp;
+                           span.badge(style='color:black;background-color:whitesmoke;font-size:1.1em') #{complete_2}
+                        
+              // New User Card Example
+              .col-xl-4.col-md-6.mb-4
+               a(href="/backlog")
+                .card.h-100
+                  .card-body
+                    .row.no-gutters.align-items-center
+                      .col.mr-2
+                        .text-xs.font-weight-bold.text-uppercase.mb-1 Backlog
+                        .h5.mb-0.mr-3.font-weight-bold.text-gray-800 #{backlog.length}
+                        .mt-2.mb-0.text-muted.text-xs
+                         
+                          span Assigned to you.
+                      .col-auto
+                        .mt-2.mb-0.text-muted.text-xs
+                          
+                          span TO DO: 
+                           &nbsp;
+                           span.badge(style='color:black;background-color:whitesmoke;font-size:1.1em') #{todo_3}
+                        .mt-2.mb-0.text-muted.text-xs
+                          
+                          span IN PROGRESS:
+                           &nbsp;
+                           span.badge(style='color:black;background-color:whitesmoke;font-size:1.1em') #{inprogress_3}
+                        .mt-2.mb-0.text-muted.text-xs
+                          
+                          span REVIEW: 
+                           &nbsp;
+                           span.badge(style='color:black;background-color:whitesmoke;font-size:1.1em') #{review_3}
+                        .mt-2.mb-0.text-muted.text-xs
+                          
+                          span REVISION: 
+                           &nbsp;
+                           span.badge(style='color:black;background-color:whitesmoke;font-size:1.1em') #{revision_3}
+                        .mt-2.mb-0.text-muted.text-xs
+                          
+                          span COMPLETE: 
+                           &nbsp;
+                           span.badge(style='color:black;background-color:whitesmoke;font-size:1.1em') #{complete_3}
+              
+        
+              // Invoice Example
+              .col-xl-12.col-lg-12.mb-4
+                .card.p-3
+                  .card-header.py-3.d-flex.flex-row.align-items-center.justify-content-between
+                    h6.m-0.font-weight-bold.text-primary Task List
+                    .mt-2.mb-0.text-muted.text-xs
+                        
+                            
+                          span Assigned to you.
+                    
+                  .table-responsive
+                    table#dataTable.table.align-items-center.table-flush
+                      thead.thead-light
+                        tr
+                          th Task
+                          th Assignee
+                          th Due Date
+                          th Status
+                          th Type
+                          th Action
+                      tbody
+                        each assign in assigns
+                         tr
+                          td #{assign.task.title}
+                          td #{assign.task.created_by}
+                          td #{assign.task.due_date}
+                          td
+                           if assign.status === 'TO DO'
+                            span.badge.badge-primary #{assign.status}
+                           if assign.status === 'IN PROGRESS'
+                            span.badge.badge-info #{assign.status}
+                           if assign.status === 'REVISION'
+                            span.badge.badge-warning #{assign.status}
+                           if assign.status === 'REVIEW'
+                            span.badge.badge-danger #{assign.status}
+                           if assign.status === 'COMPLETE'
+                            span.badge.badge-success #{assign.status}
+                          td #{assign.task.type}
+                          td
+                            a.btn.btn-sm.btn-primary(href='/task_details/1/#{assign.task_id}') View Details
+                      
+                  .card-footer
+             
+            
+            // Modal Logout
+            #logoutModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='exampleModalLabelLogout', aria-hidden='true')
+              .modal-dialog(role='document')
+                .modal-content
+                  .modal-header
+                    h5#exampleModalLabelLogout.modal-title Ohh No!
+                    button.close(type='button', data-dismiss='modal', aria-label='Close')
+                      span(aria-hidden='true') ×
+                  .modal-body
+                    p Are you sure you want to logout?
+                  .modal-footer
+                    button.btn.btn-outline-primary(type='button', data-dismiss='modal') Cancel
+                    a.btn.btn-primary(href='/log_out') Logout
+          // -Container Fluid
+          // Footer
+          footer.sticky-footer.bg-white
+            .container.my-auto
+              .copyright.text-center.my-auto
+                span
+                  | copyright © 
+                  script.
+                    document.write(new Date().getFullYear());
+                  |  - developed by 
+                  b
+                    a(href='https://evansmburu.site', target='_blank') Evans Mburu Njogu
+          // Footer
+          // Scroll to top
+          a.scroll-to-top.rounded(href='#page-top')
+            i.fas.fa-angle-up
+          script(src='vendor/jquery/jquery.min.js')
+          script(src='vendor/bootstrap/js/bootstrap.bundle.min.js')
+          script(src='vendor/jquery-easing/jquery.easing.min.js')
+          script(src='js/ruang-admin.min.js')
+          // Page level plugins
+          script(src='vendor/datatables/jquery.dataTables.min.js')
+          script(src='vendor/datatables/dataTables.bootstrap4.min.js')
+          // Page level custom scripts
+          script.
+            $(document).ready(function () {
+            $('#dataTable').DataTable(); // ID From dataTable
+            $('#dataTableHover').DataTable(); // ID From dataTable with Hover
+            });

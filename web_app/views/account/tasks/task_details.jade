@@ -1,0 +1,179 @@
+doctype html
+html(lang='en')
+  head
+    meta(charset='utf-8')
+    meta(http-equiv='X-UA-Compatible', content='IE=edge')
+    meta(name='viewport', content='width=device-width, initial-scale=1, shrink-to-fit=no')
+    meta(name='description', content='')
+    meta(name='author', content='')
+    link(href='/img/logo/logo.png', rel='icon')
+    title Task Details - User account
+    link(href='/vendor/fontawesome-free/css/all.min.css', rel='stylesheet', type='text/css')
+    link(href='/vendor/bootstrap/css/bootstrap.min.css', rel='stylesheet', type='text/css')
+    link(href='/css/ruang-admin.min.css', rel='stylesheet')
+  body#page-top
+    #wrapper
+      // Sidebar
+      ul#accordionSidebar.navbar-nav.sidebar.sidebar-light.accordion
+        a.sidebar-brand.d-flex.align-items-center.justify-content-center(href='/dashboard')
+          .sidebar-brand-icon
+            img(src='/img/logo/logo2.png')
+          .sidebar-brand-text.mx-3 TMS
+        hr.sidebar-divider.my-0
+        li.nav-item.active
+          a.nav-link(href='/dashboard')
+            i.fas.fa-fw.fa-tachometer-alt
+            span Dashboard
+        hr.sidebar-divider
+        .sidebar-heading
+          | Space
+        li.nav-item
+          a.nav-link.collapsed(href='#', data-toggle='collapse', data-target='#collapseBootstrap', aria-expanded='true', aria-controls='collapseBootstrap')
+            i.far.fa-fw.fa-window-maximize
+            span Tasks
+          #collapseBootstrap.collapse(aria-labelledby='headingBootstrap', data-parent='#accordionSidebar')
+            .bg-white.py-2.collapse-inner.rounded
+              h6.collapse-header Task Management
+              a.collapse-item(href='/action_items') Action Items
+              a.collapse-item(href='/ideas') Ideas
+              a.collapse-item(href='/backlog') Backlog
+        li.nav-item
+          a.nav-link.collapsed(href='/notifications')
+            i.fas.fa-bell.fa-fw
+            span Notifications
+            
+        
+       
+      #content-wrapper.d-flex.flex-column
+        #content
+          // TopBar
+          nav.navbar.navbar-expand.navbar-light.bg-navbar.topbar.mb-4.static-top
+            button#sidebarToggleTop.btn.btn-link.rounded-circle.mr-3
+              i.fa.fa-bars
+            ul.navbar-nav.ml-auto
+           
+              
+              
+              li.nav-item.dropdown.no-arrow
+                a#userDropdown.nav-link.dropdown-toggle(href='#', role='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
+                  img.img-profile.rounded-circle(src='/img/boy.png', style='max-width: 60px')
+                  span.ml-2.d-none.d-lg-inline.text-white.small #{user.first_name} #{user.last_name}
+                .dropdown-menu.dropdown-menu-right.shadow.animated--grow-in(aria-labelledby='userDropdown')
+                 
+                  a.dropdown-item(href='javascript:void(0);', data-toggle='modal', data-target='#logoutModal')
+                    i.fas.fa-sign-out-alt.fa-sm.fa-fw.mr-2.text-gray-400
+                    |                   Logout
+          // Topbar
+          // Container Fluid
+          #container-wrapper.container-fluid(style='margin-bottom:350px')
+            .d-sm-flex.align-items-center.justify-content-between.mb-4
+              if page === '1'
+                a(href="/action_items")
+                 i.fa.fa-angle-left.fa-2x
+              if page === '2'
+                a(href="/ideas")
+                 i.fa.fa-angle-left.fa-2x
+              if page === '3'
+                a(href="/backlog")
+                 i.fa.fa-angle-left.fa-2x
+              h1.h3.mb-0.text-gray-800 Task Details Page
+              ol.breadcrumb
+                li.breadcrumb-item
+                  a(href='#') Home
+                li.breadcrumb-item
+                  a(href='#') #{task.type}
+                li.breadcrumb-item
+                  a(href='#') #{task.status}
+                
+                li.breadcrumb-item.active(aria-current='page') Task Details
+           
+            != messages('message', locals)
+            .row.mb-2
+             .col-lg-12
+              .card.mb-4
+                  .card-header.py-3.d-flex.flex-row.align-items-center.justify-content-between
+                    
+                  .card-body
+                    .row
+                      .col-lg-4
+                        h6.m-0.font-weight-bold.text-primary Details
+                        hr
+                        h6.m-0.font-weight-bold Title: #{task.title}
+                        br
+                        h6.m-0.font-weight-bold Description: #{task.description}
+                        br
+                        h6.m-0.font-weight-bold Start Date: #{task.start_date}
+                        br
+                        h6.m-0.font-weight-bold Start Time: #{task.start_time}
+                        br
+                        h6.m-0.font-weight-bold Due Date: #{task.due_date}
+                        br
+                        h6.m-0.font-weight-bold Due Time: #{task.due_time}
+                        br
+                        h6.m-0.font-weight-bold Status:
+                           &nbsp;
+                           if task.status === 'TO DO'
+                            span.badge.badge-primary #{task.status}
+                           if task.status === 'IN PROGRESS'
+                            span.badge.badge-info #{task.status}
+                           if task.status === 'REVISION'
+                            span.badge.badge-warning #{task.status}
+                           if task.status === 'REVIEW'
+                            span.badge.badge-danger #{task.status}
+                           if task.status === 'COMPLETE'
+                            span.badge.badge-success #{task.status}
+                        br
+                        h6.m-0.font-weight-bold Priority: 
+                         span.badge(style='background-color:black;color:white') #{task.priority}
+                      .col-lg-4
+                        h6.m-0.font-weight-bold.text-primary Assigned To:
+                        hr
+                        
+                        ul.list-group.mt-3
+                         each tas in task.assigned_to
+                          li.list-group-item
+                           i.fa.fa-user
+                           &nbsp;
+                           | #{tas.full_name}
+                      .col-lg-4
+                        h6.m-0.font-weight-bold.text-primary Actions:
+                        hr
+                        if task.user_id=== user.id
+                            if task.status !== 'COMPLETE'
+                              a(href="/proceed/1/#{task.id}").btn.btn-info Proceed
+                              br
+                              br
+                              a(href="/edit_task/1/#{task.id}").btn.btn-primary Edit
+                              br
+                              br
+                            a(href="/delete_task/1/#{task.id}").btn.btn-danger Delete
+                        if task.user_id!== user.id
+                          .text-xs.text-center
+                              span No actions found.
+                        
+                        
+                         
+                        
+                        
+                      
+            
+          footer.sticky-footer.bg-white
+            .container.my-auto
+              .copyright.text-center.my-auto
+                span
+                  | copyright © 
+                  script.
+                    document.write(new Date().getFullYear());
+                  |  - developed by 
+                  b
+                    a(href='https://evansmburu.site', target='_blank') Evans Mburu Njogu
+          // Footer
+          // Scroll to top
+          a.scroll-to-top.rounded(href='#page-top')
+            i.fas.fa-angle-up
+          script(src='/vendor/jquery/jquery.min.js')
+          script(src='/vendor/bootstrap/js/bootstrap.bundle.min.js')
+          script(src='/vendor/jquery-easing/jquery.easing.min.js')
+          script(src='/js/ruang-admin.min.js')
+          script(src='/vendor/chart.js/Chart.min.js')
+          script(src='/js/demo/chart-area-demo.js')
